@@ -7,7 +7,13 @@ class WeatherController < ApplicationController
   end
 
   def city
+    # todo - get city
+    service = LocationService.new
+    location = service.get_location_by_ip('192.168.1.1')
 
+    byebug
+
+    render json: { location: location }
   end
 
 end
