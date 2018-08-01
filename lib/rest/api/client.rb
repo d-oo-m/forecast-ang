@@ -26,7 +26,8 @@ module Rest
             response = self.post(path, data)
           end
         rescue Exception => e
-          log_request format_error(e, method, path, @headers, data)
+          # todo
+          # log_request format_error(e, method, path, @headers, data)
           raise e
         end
 
@@ -38,9 +39,8 @@ module Rest
         return format_response(200, 'ok', response)
       end
 
-      private
-
       def get(path)
+        byebug
         RestClient::Request.execute(:method => :get, :url => path, :headers => @headers, :verify_ssl => false,
                                     :timeout => @timeout)
       end
@@ -49,6 +49,8 @@ module Rest
         RestClient::Request.execute(:method => :post, :url => path, :payload => data, :headers => @headers,
                                     :timeout => @timeout)
       end
+
+      private
 
       def url(method, path, options = {})
         query_string = build_query(options[:request_params]) if method.eql? 'get'
@@ -91,6 +93,15 @@ module Rest
         else
           Hashie::Mash.new(json)
         end
+      end
+
+      def format_error(e, method, path, headers, data)
+        error = "Error #{JSON.parse(e.http_body)['statusMessage']} while executing #{method} on #{path} with headers : #{headers} and data : #{data} | status = #{e.response.code}"
+        return Response.new( 500, e.message, {}, error )
+      end
+
+      def format_response(status_code, status_message, data = nil)
+        return Response.new( status_code, status_message, data )
       end
 
     end

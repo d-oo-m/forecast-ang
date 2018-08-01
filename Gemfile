@@ -37,6 +37,7 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'hashie', '~> 3.5.7'
 gem 'oj', '~> 3.0'
+gem 'rest-client', '~> 2.0.2'
 
 
 group :development, :test do
