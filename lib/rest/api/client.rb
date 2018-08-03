@@ -40,7 +40,6 @@ module Rest
       end
 
       def get(path)
-        byebug
         RestClient::Request.execute(:method => :get, :url => path, :headers => @headers, :verify_ssl => false,
                                     :timeout => @timeout)
       end

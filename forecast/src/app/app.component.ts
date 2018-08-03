@@ -8,15 +8,16 @@ import { Http } from '@angular/http';
 })
 export class AppComponent {
   users = [];
+  location: string = "";
 
   constructor(private http: Http) {
-    this.getUsers();
+    this.getLocation();
   }
 
-  getUsers() {
-    this.http.get('http://localhost:3000/users')
+  getLocation() {
+    this.http.get('http://localhost:3001/location')
       .subscribe(res => {
-        this.users = res.json().users;
+        this.location = res.json().location;
       });
   }
 }
