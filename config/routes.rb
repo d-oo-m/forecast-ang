@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   get 'weather/index'
 
-  get 'users', to: 'weather#list_users'
-
-  get 'location', to: 'weather#location'
+  # get 'location', to: 'weather#location'
 
   root 'weather#index'
 
